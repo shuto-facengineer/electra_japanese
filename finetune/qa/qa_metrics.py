@@ -274,7 +274,7 @@ class SpanBasedQAScorer(scorer.Scorer):
 
             all_nbest_json[example_id] = nbest_json
             print(len(all_nbest_json[example_id]))
-            utils.write_json(dict(all_nbest_json),
+            utils.write_json(str(all_nbest_json),
                          self._config.qa_preds_file('test_' + self._name))
 
         utils.write_json(str(all_nbest_json),
