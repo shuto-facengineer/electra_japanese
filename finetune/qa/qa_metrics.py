@@ -273,9 +273,9 @@ class SpanBasedQAScorer(scorer.Scorer):
                 all_predictions[example_id] = best_non_null_entry.text
 
             all_nbest_json[example_id] = nbest_json
-            print(len(all_nbest_json[example_id]))
-            utils.write_json(str(all_nbest_json),
-                         self._config.qa_preds_file('test_' + self._name))
+            # print(len(all_nbest_json[example_id]))
+            # utils.write_json(str(all_nbest_json),
+            #              self._config.qa_preds_file('test_' + self._name))
 
         utils.write_json(str(all_nbest_json),
                          self._config.qa_preds_file(self._name))
@@ -365,8 +365,8 @@ def get_final_text(config: configure_finetuning.FinetuningConfig, pred_text,
     # and `pred_text`, and check if they are the same length. If they are
     # NOT the same length, the heuristic has failed. If they are the same
     # length, we assume the characters are one-to-one aligned.
-    # tokenizer = tokenization.SentencePieceTokenizer('model_sentence_piece/wiki-ja.model', do_lower_case=config.do_lower_case)
-    tokenizer = tokenization.BasicTokenizer(do_lower_case=config.do_lower_case)
+    tokenizer = tokenization.SentencePieceTokenizer('model_sentence_piece/wiki-ja.model', do_lower_case=config.do_lower_case)
+    # tokenizer = tokenization.BasicTokenizer(do_lower_case=config.do_lower_case)
     tok_text = " ".join(tokenizer.tokenize(orig_text))
     # print('tok_text: ', tok_text)
     start_position = tok_text.find(pred_text)
