@@ -85,21 +85,40 @@ def load_vocab(vocab_file):
     return vocab
 
 
-def convert_by_vocab(vocab, items):
+# def convert_by_vocab(vocab, items):
+#     """Converts a sequence of [tokens|ids] using the vocab."""
+#     output = []
+#     for item in items:
+#         output.append(vocab[item])
+#     return output
+
+
+# def convert_tokens_to_ids(vocab, tokens):
+#     return convert_by_vocab(vocab, tokens)
+
+
+# def convert_ids_to_tokens(inv_vocab, ids):
+#     return convert_by_vocab(inv_vocab, ids)
+
+def convert_by_vocab(vocab, items, unk_info):
     """Converts a sequence of [tokens|ids] using the vocab."""
     output = []
     for item in items:
-        output.append(vocab[item])
+        if item in vocab:
+            output.append(vocab[item])
+        else:
+            output.append(unk_info)
     return output
 
 
 def convert_tokens_to_ids(vocab, tokens):
-    return convert_by_vocab(vocab, tokens)
+    """Id of <unk> is assumed as 0 accroding to sentencepiece"""
+    return convert_by_vocab(vocab, tokens, unk_info=0)
 
 
 def convert_ids_to_tokens(inv_vocab, ids):
-    return convert_by_vocab(inv_vocab, ids)
-
+    """Token of unknown word is assumed as <unk> according to sentencepiece"""
+    return convert_by_vocab(inv_vocab, ids, unk_info="<unk>")
 
 def whitespace_tokenize(text):
     """Runs basic whitespace cleaning and splitting on a piece of text."""
@@ -110,48 +129,48 @@ def whitespace_tokenize(text):
     return tokens
 
 
-class FullTokenizer(object):
-    """Runs end-to-end tokenziation."""
-
-    def __init__(self, vocab_file, do_lower_case=True):
-        self.vocab = load_vocab(vocab_file)
-        self.inv_vocab = {v: k for k, v in self.vocab.items()}
-        self.basic_tokenizer = BasicTokenizer(do_lower_case=do_lower_case)
-        self.wordpiece_tokenizer = WordpieceTokenizer(vocab=self.vocab)
-
-    def tokenize(self, text):
-        split_tokens = []
-        for token in self.basic_tokenizer.tokenize(text):
-            for sub_token in self.wordpiece_tokenizer.tokenize(token):
-                split_tokens.append(sub_token)
-
-        return split_tokens
-
-    def convert_tokens_to_ids(self, tokens):
-        return convert_by_vocab(self.vocab, tokens)
-
-    def convert_ids_to_tokens(self, ids):
-        return convert_by_vocab(self.inv_vocab, ids)
-
 # class FullTokenizer(object):
 #     """Runs end-to-end tokenziation."""
 
-#     def __init__(self, vocab_file, model_file='', do_lower_case=True):
-#         self.tokenizer = SentencePieceTokenizer('model_sentence_piece/wiki-ja.model', do_lower_case=do_lower_case)
+#     def __init__(self, vocab_file, do_lower_case=True):
 #         self.vocab = load_vocab(vocab_file)
 #         self.inv_vocab = {v: k for k, v in self.vocab.items()}
+#         self.basic_tokenizer = BasicTokenizer(do_lower_case=do_lower_case)
+#         self.wordpiece_tokenizer = WordpieceTokenizer(vocab=self.vocab)
 
 #     def tokenize(self, text):
-#         split_tokens = self.tokenizer.tokenize(text)
+#         split_tokens = []
+#         for token in self.basic_tokenizer.tokenize(text):
+#             for sub_token in self.wordpiece_tokenizer.tokenize(token):
+#                 split_tokens.append(sub_token)
+
 #         return split_tokens
 
 #     def convert_tokens_to_ids(self, tokens):
-#         """Id of <unk> is assumed as 0 accroding to sentencepiece"""
-#         return convert_by_vocab(self.vocab, tokens, unk_info=0)
+#         return convert_by_vocab(self.vocab, tokens)
 
 #     def convert_ids_to_tokens(self, ids):
-#         """Token of unknown word is assumed as <unk> according to sentencepiece"""
-#         return convert_by_vocab(self.inv_vocab, ids, unk_info="<unk>")
+#         return convert_by_vocab(self.inv_vocab, ids)
+
+class FullTokenizer(object):
+    """Runs end-to-end tokenziation."""
+
+    def __init__(self, vocab_file, model_file='', do_lower_case=True):
+        self.tokenizer = SentencePieceTokenizer('model_sentence_piece/wiki-ja.model', do_lower_case=do_lower_case)
+        self.vocab = load_vocab(vocab_file)
+        self.inv_vocab = {v: k for k, v in self.vocab.items()}
+
+    def tokenize(self, text):
+        split_tokens = self.tokenizer.tokenize(text)
+        return split_tokens
+
+    def convert_tokens_to_ids(self, tokens):
+        """Id of <unk> is assumed as 0 accroding to sentencepiece"""
+        return convert_by_vocab(self.vocab, tokens, unk_info=0)
+
+    def convert_ids_to_tokens(self, ids):
+        """Token of unknown word is assumed as <unk> according to sentencepiece"""
+        return convert_by_vocab(self.inv_vocab, ids, unk_info="<unk>")
 
 class BasicTokenizer(object):
     """Runs basic tokenization (punctuation splitting, lower casing, etc.)."""
