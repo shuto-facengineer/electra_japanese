@@ -279,8 +279,9 @@ def run_finetuning(config: configure_finetuning.FinetuningConfig):
         config.model_dir = generic_model_dir + "_" + str(trial)
         if config.do_train:
             utils.rmkdir(config.model_dir)
-
+        print("start runner")
         model_runner = ModelRunner(config, tasks)
+        print('end runner')
         if config.do_train:
             heading("Start training")
             model_runner.train()
