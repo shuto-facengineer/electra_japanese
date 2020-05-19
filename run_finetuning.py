@@ -229,7 +229,7 @@ class ModelRunner(object):
                 logits[task_name][r[task_name]["eid"]] = (
                     r[task_name]["logits"] if "logits" in r[task_name]
                     else r[task_name]["predictions"])
-                print(r[task_name]['predictions'])
+                print(r[task_name])
                 # a.append(r[task_name]['predictions'])
         # a = [str(aa) for aa in a]
         # print(','.join(a))
