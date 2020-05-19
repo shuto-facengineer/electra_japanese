@@ -218,7 +218,7 @@ class ModelRunner(object):
         utils.log("Writing out predictions for", tasks, split)
         predict_input_fn, _ = self._preprocessor.prepare_predict(tasks, split)
         results = self._estimator.predict(input_fn=predict_input_fn,
-                                          yield_single_examples=True, predict_keys="probabilities")
+                                          yield_single_examples=True)
         # task name -> eid -> model-logits
         logits = collections.defaultdict(dict)
         a = []
@@ -229,7 +229,7 @@ class ModelRunner(object):
                 logits[task_name][r[task_name]["eid"]] = (
                     r[task_name]["logits"] if "logits" in r[task_name]
                     else r[task_name]["predictions"])
-                print(r[task_name])
+                print(r)
                 # a.append(r[task_name]['predictions'])
         # a = [str(aa) for aa in a]
         # print(','.join(a))
