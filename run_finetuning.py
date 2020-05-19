@@ -226,11 +226,11 @@ class ModelRunner(object):
             if r["task_id"] != len(self._tasks):
                 r = utils.nest_dict(r, self._config.task_names)
                 task_name = self._config.task_names[r["task_id"]]
-                logits[task_name][r[task_name]["eid"]] = (
-                    r[task_name]["logits"] if "logits" in r[task_name]
-                    else r[task_name]["predictions"])
+                # logits[task_name][r[task_name]["eid"]] = (
+                #     r[task_name]["logits"] if "logits" in r[task_name]
+                #     else r[task_name]["predictions"])
+                logits[task_name][r[task_name]["eid"]] = ['logits': r[task_name]["logits"], 'prediction': r[task_name]["predictions"]}
                 print(r)
-                print(tf.nn.softmax(r[task_name]["logits"]))
                 # a.append(r[task_name]['predictions'])
         # a = [str(aa) for aa in a]
         # print(','.join(a))
