@@ -218,7 +218,7 @@ class ModelRunner(object):
         utils.log("Writing out predictions for", tasks, split)
         predict_input_fn, _ = self._preprocessor.prepare_predict(tasks, split)
         results = self._estimator.predict(input_fn=predict_input_fn,
-                                          yield_single_examples=True)
+                                          yield_single_examples=True, predict_keys="probabilities")
         # task name -> eid -> model-logits
         logits = collections.defaultdict(dict)
         a = []
