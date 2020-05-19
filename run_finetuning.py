@@ -230,6 +230,7 @@ class ModelRunner(object):
                     r[task_name]["logits"] if "logits" in r[task_name]
                     else r[task_name]["predictions"])
                 print(r)
+                print(tf.nn.softmax(r[task_name]["logits"]))
                 # a.append(r[task_name]['predictions'])
         # a = [str(aa) for aa in a]
         # print(','.join(a))
