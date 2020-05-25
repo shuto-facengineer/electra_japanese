@@ -191,11 +191,17 @@ class ModelRunner(object):
         return {task.name: self.evaluate_task(task) for task in self._tasks}
 
     def evaluate_task(self, task, split="dev", return_results=True):
+        import time
         """Evaluate the current model."""
         utils.log("Evaluating", task.name)
+        time_1 = time.time()
         eval_input_fn, _ = self._preprocessor.prepare_predict([task], split)
+        time_2 = time.time()
+        print("preprocessing time for predict : ", time_2 - time_1)
         results = self._estimator.predict(input_fn=eval_input_fn,
                                           yield_single_examples=True)
+        time_3 = time.time()
+        print("predict time : ", time_3 - time_2)
         scorer = task.get_scorer()
         print('len scorer: ', results)
         for r in tqdm(results):
