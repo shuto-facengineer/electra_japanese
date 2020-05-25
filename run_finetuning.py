@@ -201,7 +201,9 @@ class ModelRunner(object):
         results = self._estimator.predict(input_fn=eval_input_fn,
                                           yield_single_examples=True)
         time_3 = time.time()
-        print('r[0] = ', results[0])
+        for r in tqdm(results):
+            print('r[0] = ', r)
+            break
         print("predict time : ", time_3 - time_2)
         scorer = task.get_scorer()
         print('len scorer: ', results)
