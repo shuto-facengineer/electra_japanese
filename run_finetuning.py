@@ -209,7 +209,7 @@ class ModelRunner(object):
         print('len scorer: ', results)
         for r in tqdm(results):
             # print('task.name: ', task.name)
-            print("predictions: ", r[task.name]['eid'])
+            print("predictions: ", r['squad_eid'])
             if r["task_id"] != len(self._tasks):  # ignore padding examples
                 r = utils.nest_dict(r, self._config.task_names)
                 scorer.update(r[task.name])
