@@ -95,7 +95,7 @@ class SpanBasedQAScorer(scorer.Scorer):
         unique_id_to_result = {}
         for result in self._all_results:
             unique_id_to_result[result.unique_id] = result
-        print('unique_id_to_result: ', unique_id_to_result)
+        print('unique_id_to_result: ', unique_id_to_result.keys())
         print("unique_id_to_result keys length: ", len(unique_id_to_result))
         # print()
         _PrelimPrediction = collections.namedtuple(  # pylint: disable=invalid-name
