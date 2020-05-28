@@ -95,7 +95,8 @@ class SpanBasedQAScorer(scorer.Scorer):
         unique_id_to_result = {}
         for result in self._all_results:
             unique_id_to_result[result.unique_id] = result
-
+        print("unique_id_to_result keys length: ", len(unique_id_to_result))
+        # print()
         _PrelimPrediction = collections.namedtuple(  # pylint: disable=invalid-name
             "PrelimPrediction",
             ["feature_index", "start_index", "end_index", "start_logit",
@@ -113,9 +114,9 @@ class SpanBasedQAScorer(scorer.Scorer):
             # keep track of the minimum score of null start+end of position 0
             score_null = 1000000  # large and positive
             for (feature_index, feature) in enumerate(features):
-                print("self._name + _eid:", self._name + "_eid")
-                print("feature[self._name + _eid]: ", feature[self._name + "_eid"])
-                print('feature: ', feature)
+                # print("self._name + _eid:", self._name + "_eid")
+                # print("feature[self._name + _eid]: ", feature[self._name + "_eid"])
+                # print('feature: ', feature)
                 # print("unique_id_to_result keys: ", unique_id_to_result.keys())
                 result = unique_id_to_result[feature[self._name + "_eid"]]
                 # print("self._config.joint_prediction: ",
