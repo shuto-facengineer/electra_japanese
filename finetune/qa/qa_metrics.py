@@ -115,7 +115,7 @@ class SpanBasedQAScorer(scorer.Scorer):
             # keep track of the minimum score of null start+end of position 0
             score_null = 1000000  # large and positive
             for (feature_index, feature) in enumerate(features):
-                if feature[self._name + "_eid"] - int(feature[self._name + "_eid"] / 1000) * 1000 <= 83
+                if feature[self._name + "_eid"] - int(feature[self._name + "_eid"] / 1000) * 1000 <= 83:
                     # print("self._name + _eid:", self._name + "_eid")
                     # print("feature[self._name + _eid]: ", feature[self._name + "_eid"])
                     # print('feature: ', feature)
