@@ -254,7 +254,7 @@ class QATask(task.Task):
                   for_eval=False):
         all_features = []
         query_tokens = self._tokenizer.tokenize(example.question_text)
-        print()
+        # print()
         if len(query_tokens) > self.config.max_query_length:
             query_tokens = query_tokens[0:self.config.max_query_length]
 

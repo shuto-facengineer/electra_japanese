@@ -96,6 +96,7 @@ class Preprocessor(object):
     def serialize_examples(self, examples, is_training, output_file, batch_size):
         """Convert a set of `InputExample`s to a TFRecord file."""
         n_examples = 0
+        print('len examples in preprocessing: ', len(examples))
         with tf.io.TFRecordWriter(output_file) as writer:
             for (ex_index, example) in enumerate(examples):
                 if ex_index % 2000 == 0:
