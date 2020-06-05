@@ -58,7 +58,7 @@ class FinetuningConfig(object):
         # shallower layers have lower learning rates
         self.num_train_epochs = 10  # passes over the dataset during training
         self.warmup_proportion = 0.1  # how much of training to warm up the LR for
-        self.save_checkpoints_steps = 1000000
+        self.save_checkpoints_steps = 10000
         self.iterations_per_loop = 1000
         self.use_tfrecords_if_existing = True  # don't make tfrecords and write them
         # to disc if existing ones are found
