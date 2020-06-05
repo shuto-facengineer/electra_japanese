@@ -427,7 +427,7 @@ class QATask(task.Task):
         hidden_size = final_hidden_shape[2]
 
         lstm_fw = tf.keras.layers.LSTM(hidden_size, return_sequences=True)
-        lstm_bw = tf.keras.layers.LSTM(hidden_size, return_sequences=True)
+        lstm_bw = tf.keras.layers.LSTM(hidden_size, return_sequences=True, go_backwards=True)
         biLSTM = tf.keras.layers.Bidirectional(lstm_fw, backward_layer=lstm_bw, merge_mode='concat')
         final_hidden = biLSTM(final_hidden)
 
