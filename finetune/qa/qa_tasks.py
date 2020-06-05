@@ -426,9 +426,11 @@ class QATask(task.Task):
         seq_length = final_hidden_shape[1]
         hidden_size = final_hidden_shape[2]
 
-        lstm = tf.keras.layers.LSTM(hidden_size, return_sequences=True, return_state=True)
-        final_hidden, _, _ = lstm(final_hidden)
-        
+        lstm_fw = tf.keras.layers.LSTM(hidden_size, return_sequences=True)
+        lstm_bw = tf.keras.layers.LSTM(hidden_size, return_sequences=True)
+        biLSTM = tf.keras.layers.Bidirectional(lstm_fw, backward_layer=lstm_bw, merge_mode='concat')
+        final_hidden = biLSTM(final_hidden)
+
         answer_mask = tf.cast(features["input_mask"], tf.float32)
         answer_mask *= tf.cast(features["segment_ids"], tf.float32)
         answer_mask += tf.one_hot(0, seq_length)
