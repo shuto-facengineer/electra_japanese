@@ -35,7 +35,7 @@ from util import utils
 import os
 from tqdm import tqdm
 
-os.environ["CUDA_VISIBLE_DEVICES"]="1"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 class FinetuningModel(object):
     """Finetuning model with support for multi-task training."""
