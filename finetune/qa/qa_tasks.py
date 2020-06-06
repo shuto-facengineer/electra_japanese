@@ -431,10 +431,10 @@ class QATask(task.Task):
         # biLSTM = tf.keras.layers.Bidirectional(lstm_fw, backward_layer=lstm_bw, merge_mode='concat')
         # final_hidden = biLSTM(final_hidden)
 
-        # biLSTM = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(100, return_sequences=True))
-        lstm = tf.keras.layers.LSTM(100, return_sequences=True)
+        biLSTM = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(100, return_sequences=True))
+        # lstm = tf.keras.layers.LSTM(100, return_sequences=True)
         linear = tf.keras.layers.Dense(2, activation=None)
-        final_hidden = lstm(final_hidden)
+        final_hidden = biLSTM(final_hidden)
         final_hidden = linear(final_hidden)
 
         answer_mask = tf.cast(features["input_mask"], tf.float32)
