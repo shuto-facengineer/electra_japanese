@@ -424,18 +424,18 @@ class QATask(task.Task):
             final_hidden, expected_rank=3)
         batch_size = final_hidden_shape[0]
         seq_length = final_hidden_shape[1]
-        hidden_size = final_hidden_shape[2]
+        # hidden_size = final_hidden_shape[2]
 
         # lstm_fw = tf.keras.layers.LSTM(hidden_size, return_sequences=True)
         # lstm_bw = tf.keras.layers.LSTM(hidden_size, return_sequences=True, go_backwards=True)
         # biLSTM = tf.keras.layers.Bidirectional(lstm_fw, backward_layer=lstm_bw, merge_mode='concat')
         # final_hidden = biLSTM(final_hidden)
 
-        biLSTM = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(100, return_sequences=True))
+        # biLSTM = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(100, return_sequences=True))
         # lstm = tf.keras.layers.LSTM(100, return_sequences=True)
-        linear = tf.keras.layers.Dense(2, activation=None)
-        final_hidden = biLSTM(final_hidden)
-        final_hidden = linear(final_hidden)
+        # linear = tf.keras.layers.Dense(2, activation=None)
+        # final_hidden = biLSTM(final_hidden)
+        # final_hidden = linear(final_hidden)
 
         answer_mask = tf.cast(features["input_mask"], tf.float32)
         answer_mask *= tf.cast(features["segment_ids"], tf.float32)
