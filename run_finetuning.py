@@ -35,7 +35,7 @@ from util import utils
 import os
 from tqdm import tqdm
 
-os.environ["CUDA_VISIBLE_DEVICES"]="1"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 class FinetuningModel(object):
     """Finetuning model with support for multi-task training."""
@@ -191,37 +191,20 @@ class ModelRunner(object):
         return {task.name: self.evaluate_task(task) for task in self._tasks}
 
     def evaluate_task(self, task, split="dev", return_results=True):
-        import time
         """Evaluate the current model."""
         utils.log("Evaluating", task.name)
-        time_1 = time.time()
         eval_input_fn, _ = self._preprocessor.prepare_predict([task], split)
-        time_2 = time.time()
-        print("preprocessing time for predict : ", time_2 - time_1)
         results = self._estimator.predict(input_fn=eval_input_fn,
                                           yield_single_examples=True)
-        time_3 = time.time()
-        # for r in tqdm(results):
-        #     print('r[0] = ', r)
-        #     break
-        print("predict time : ", time_3 - time_2)
         scorer = task.get_scorer()
-        print('len scorer: ', results)
         for r in tqdm(results):
-            # print('task.name: ', task.name)
-            # print("predictions: ", r['squad_eid'])
             if r["task_id"] != len(self._tasks):  # ignore padding examples
                 r = utils.nest_dict(r, self._config.task_names)
                 scorer.update(r[task.name])
-                # print(r[task.name]['predictions'])
-        print('done evaluate task')
         if return_results:
             utils.log(task.name + ": " + scorer.results_str())
-            utils.log()
-            print('done 1')
             return dict(scorer.get_results())
         else:
-            print('done2')
             return scorer
 
     def write_classification_outputs(self, tasks, trial, split):
@@ -241,10 +224,6 @@ class ModelRunner(object):
                 #     r[task_name]["logits"] if "logits" in r[task_name]
                 #     else r[task_name]["predictions"])
                 logits[task_name][r[task_name]["eid"]] = {'logits': r[task_name]["logits"], 'prediction': r[task_name]["predictions"]}
-                print(r)
-                # a.append(r[task_name]['predictions'])
-        # a = [str(aa) for aa in a]
-        # print(','.join(a))
         for task_name in logits:
             utils.log("Pickling predictions for {:} {:} examples ({:})".format(
                 len(logits[task_name]), task_name, split))
@@ -291,21 +270,16 @@ def run_finetuning(config: configure_finetuning.FinetuningConfig):
         config.model_dir = generic_model_dir + "_" + str(trial)
         if config.do_train:
             utils.rmkdir(config.model_dir)
-        print("start runner")
         model_runner = ModelRunner(config, tasks)
-        print('end runner')
         if config.do_train:
             heading("Start training")
             model_runner.train()
             utils.log()
 
         if config.do_eval:
-            # heading("Run dev set evaluation")
-            # results.append(model_runner.evaluate())
-            # print('done results.append')
-            # write_results(config, results)
-            # print('done write results')
-            # print("config.write_test_outputs: ", config.write_test_outputs)
+            heading("Run dev set evaluation")
+            results.append(model_runner.evaluate())
+            write_results(config, results)
             if config.write_test_outputs and trial <= config.n_writes_test:
                 heading("Running on the test set and writing the predictions")
                 for task in tasks:

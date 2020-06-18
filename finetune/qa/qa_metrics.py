@@ -75,10 +75,8 @@ class SpanBasedQAScorer(scorer.Scorer):
         return self._total_loss / len(self._all_results)
 
     def _get_results(self):
-        print('vao get results')
         self.write_predictions()
         if self._name == "squad":
-            print('done write prediction')
             squad_official_eval.set_opts(self._config, self._split)
             squad_official_eval.main()
             return sorted(utils.load_json(
@@ -95,9 +93,6 @@ class SpanBasedQAScorer(scorer.Scorer):
         unique_id_to_result = {}
         for result in self._all_results:
             unique_id_to_result[result.unique_id] = result
-        print('unique_id_to_result: ', unique_id_to_result.keys())
-        print("unique_id_to_result keys length: ", len(unique_id_to_result))
-        # print()
         _PrelimPrediction = collections.namedtuple(  # pylint: disable=invalid-name
             "PrelimPrediction",
             ["feature_index", "start_index", "end_index", "start_logit",
@@ -106,7 +101,6 @@ class SpanBasedQAScorer(scorer.Scorer):
         all_predictions = collections.OrderedDict()
         all_nbest_json = collections.OrderedDict()
         scores_diff_json = collections.OrderedDict()
-        print('len _eval_examples: ', len(self._eval_examples))
         for example in tqdm(self._eval_examples):
             example_id = example.qas_id if "squad" in self._name else example.qid
             features = self._task.featurize(example, False, for_eval=True)
@@ -118,10 +112,6 @@ class SpanBasedQAScorer(scorer.Scorer):
                 if feature[self._name + "_eid"] not in unique_id_to_result:
                     print('miss : ', feature[self._name + "_eid"])
             for (feature_index, feature) in enumerate(features):
-                # print("self._name + _eid:", self._name + "_eid")
-                # print("feature[self._name + _eid]: ", feature[self._name + "_eid"])
-                # print('feature: ', feature)
-                # print("unique_id_to_result keys: ", unique_id_to_result.keys())
                 result = unique_id_to_result[feature[self._name + "_eid"]]
                 if self._config.joint_prediction:
                     start_indexes = result.start_top_index
@@ -373,7 +363,6 @@ def get_final_text(config: configure_finetuning.FinetuningConfig, pred_text,
     # NOT the same length, the heuristic has failed. If they are the same
     # length, we assume the characters are one-to-one aligned.
     tokenizer = tokenization.SentencePieceTokenizer('model_sentence_piece/wiki-ja.model', do_lower_case=config.do_lower_case)
-    # tokenizer = tokenization.BasicTokenizer(do_lower_case=config.do_lower_case)
     tok_text = " ".join(tokenizer.tokenize(orig_text))
     # print('tok_text: ', tok_text)
     start_position = tok_text.find(pred_text)
