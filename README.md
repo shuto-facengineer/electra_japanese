@@ -19,14 +19,13 @@ These instructions pre-train a small ELECTRA model (12 layers, 256 hidden size).
 All scripts for pretraining from scratch are provided. Follow the instructions below.
 ### Training SentencePiece model
 Please download jawiki-data from this [link](https://dumps.wikimedia.org/jawiki/20200601/jawiki-20200601-pages-articles-multistream.xml.bz2) and extract it. It's also the dataset we used to pretrain Electra.
-Check the `config.ini` file for more infomations.
 
 ```
 python pretrain/train-sentencepiece.py
 ```
-
+- Run `python extract_wiki_data.py` to extract the dataset.
 ### Data preparation
-- Place the vocab file in `data/vocab.txt`. 
+- Place the vocab file and sentencepiece model in `data/wiki-ja.vocab` and `data/wiki-ja.model`. 
 - Run `python build_japanesewiki_pretrain_data.py`.  It pre-processes/tokenizes the data and outputs examples as tfrecord files under `data/pretrain_tfrecords`.
 ### Pretraining
 This step is exactly the same as in Google/Electra document. You can refer this script below:
