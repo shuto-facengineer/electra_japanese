@@ -12,7 +12,7 @@ EXTRACTDIR = "data/wiki/"
 
 def extract():
     subprocess.call(['python3', 
-                    os.path.join(CURDIR, os.pardir,
+                    os.path.join(CURDIR,
                                  'wikiextractor', 'WikiExtractor.py'), 
                     FILEPATH, "-o={}".format(EXTRACTDIR)])
 
