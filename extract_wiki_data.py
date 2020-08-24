@@ -5,7 +5,7 @@ import sys
 
 FILEURL = "https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-pages-articles-multistream.xml.bz2"
 FILEPATH = "data/jawiki-latest-pages-articles-multistream.xml.bz2"
-EXTRACTDIR = "data/wiki/""
+EXTRACTDIR = "data/wiki/"
 
 
 def extract():
