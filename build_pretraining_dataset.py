@@ -118,11 +118,12 @@ class ExampleBuilder(object):
 class ExampleWriter(object):
     """Writes pre-training examples to disk."""
 
-    def __init__(self, job_id, vocab_file, output_dir, max_seq_length,
+    def __init__(self, job_id, model_file, vocab_file, output_dir, max_seq_length,
                  num_jobs, blanks_separate_docs, do_lower_case,
                  num_out_files=1000):
         self._blanks_separate_docs = blanks_separate_docs
         tokenizer = tokenization.FullTokenizer(
+            model_file=model_file,
             vocab_file=vocab_file,
             do_lower_case=do_lower_case)
         self._example_builder = ExampleBuilder(tokenizer, max_seq_length)

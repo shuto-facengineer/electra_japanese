@@ -156,7 +156,7 @@ class FullTokenizer(object):
     """Runs end-to-end tokenziation."""
 
     def __init__(self, vocab_file, model_file='', do_lower_case=True):
-        self.tokenizer = SentencePieceTokenizer('model_sentence_piece/wiki-ja.model', do_lower_case=do_lower_case)
+        self.tokenizer = SentencePieceTokenizer(model_file, do_lower_case=do_lower_case)
         self.vocab = load_vocab(vocab_file)
         self.inv_vocab = {v: k for k, v in self.vocab.items()}
 
