@@ -2,6 +2,8 @@ import os
 import subprocess
 import sys
 
+CURDIR = os.path.dirname(os.path.abspath(__file__))
+
 
 FILEURL = "https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-pages-articles-multistream.xml.bz2"
 FILEPATH = "data/jawiki-latest-pages-articles-multistream.xml.bz2"
