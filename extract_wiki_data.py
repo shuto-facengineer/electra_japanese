@@ -5,7 +5,7 @@ import sys
 CURDIR = os.path.dirname(os.path.abspath(__file__))
 
 
-FILEPATH = "jawiki-20200601-pages-articles-multistream.xml.bz2"
+FILEPATH = "data/jawiki-20200601-pages-articles-multistream.xml.bz2"
 EXTRACTDIR = "data/wiki/"
 
 
