@@ -26,7 +26,7 @@ python pretrain/train-sentencepiece.py
 - Run `python extract_wiki_data.py` to extract the dataset.
 ### Data preparation
 - Place the vocab file and sentencepiece model in `data/wiki-ja.vocab` and `data/wiki-ja.model`. 
-- Run `python build_japanesewiki_pretrain_data.py`.  It pre-processes/tokenizes the data and outputs examples as tfrecord files under `data/pretrain_tfrecords`.
+- Run `python build_japanesewiki_pretrain_data.py --data-dir data/ --model-dir data/ --num-processes 4`.  It pre-processes/tokenizes the data and outputs examples as tfrecord files under `data/pretrain_tfrecords`.
 ### Pretraining
 This step is exactly the same as in Google/Electra document. You can refer this script below:
 ```
