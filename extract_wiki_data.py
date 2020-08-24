@@ -1,17 +1,12 @@
-import configparser
 import os
 import subprocess
 import sys
-from urllib.request import urlretrieve
 
-CURDIR = os.path.dirname(os.path.abspath(__file__))
-CONFIGPATH = os.path.join(CURDIR, os.pardir, 'config.ini')
-config = configparser.ConfigParser()
-config.read(CONFIGPATH)
 
-FILEURL = config['DATA']['FILEURL']
-FILEPATH = config['DATA']['FILEPATH']
-EXTRACTDIR = config['DATA']['TEXTDIR']
+FILEURL = "https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-pages-articles-multistream.xml.bz2"
+FILEPATH = "data/jawiki-latest-pages-articles-multistream.xml.bz2"
+EXTRACTDIR = "data/wiki/""
+
 
 def extract():
     subprocess.call(['python3', 
@@ -21,7 +16,6 @@ def extract():
 
 
 def main():
-    download()
     extract()
 
 
