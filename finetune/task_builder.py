@@ -27,7 +27,7 @@ from model import tokenization
 
 
 def get_tasks(config: configure_finetuning.FinetuningConfig):
-    tokenizer = tokenization.FullTokenizer(vocab_file=config.vocab_file,
+    tokenizer = tokenization.FullTokenizer(model_file=config.sent_model_file, vocab_file=config.vocab_file,
                                            do_lower_case=config.do_lower_case)
     print('config.vocab_file: ', config.vocab_file)
     return [get_task(config, task_name, tokenizer)

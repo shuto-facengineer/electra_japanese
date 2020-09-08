@@ -156,6 +156,7 @@ class FullTokenizer(object):
     """Runs end-to-end tokenziation."""
 
     def __init__(self, vocab_file, model_file='', do_lower_case=True):
+        print('Loading sentencepiece model from: ', model_file)
         self.tokenizer = SentencePieceTokenizer(model_file, do_lower_case=do_lower_case)
         self.vocab = load_vocab(vocab_file)
         self.inv_vocab = {v: k for k, v in self.vocab.items()}
@@ -177,6 +178,10 @@ class SentencePieceTokenizer(object):
 
     def __init__(self, model_file=None, do_lower_case=True):
         """Constructs a SentencePieceTokenizer."""
+        if model_file == '' or model_file == None:
+            print('Empty sentence piece model path')
+            model_file = 'model_sentence_piece/wiki-ja.model'
+            print('Loading sentence piece from specifix path: ', model_file)
         self.tokenizer = sp.SentencePieceProcessor()
         if not self.tokenizer.Load(model_file):
             #print("Loaded a trained SentencePiece model.")

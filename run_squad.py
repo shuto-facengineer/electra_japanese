@@ -31,7 +31,7 @@ import tensorflow as tf
 from tqdm import tqdm
 
 
-os.environ["CUDA_VISIBLE_DEVICES"]="2"
+# os.environ["CUDA_VISIBLE_DEVICES"]="2"
 
 flags = tf.flags
 
