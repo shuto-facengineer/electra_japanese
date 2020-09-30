@@ -35,5 +35,5 @@ This step is exactly the same as in Google/Electra document. You can refer this 
 python run_pretraining.py \
     --data-dir data \
     --model-name electra_small_japanese \
-    --hparams '{"debug": false, "do_train": true, "do_eval": false, "vocab_file": "data/vocab.txt", "model_sentencepiece_path": "model_sentence_piece/wiki-ja.vocab", "model_size": "small", "vocab_size": 32000, "max_seq_length": 512, "num_train_steps": 1000000, "train_batch_size": 64}'
+    --hparams '{"debug": false, "do_train": true, "do_eval": false, "vocab_file": "data/vocab.txt", "model_sentencepiece_path": "model_sentence_piece/wiki-ja.model", "model_size": "small", "vocab_size": 32000, "max_seq_length": 512, "num_train_steps": 1000000, "train_batch_size": 64}'
 ```
