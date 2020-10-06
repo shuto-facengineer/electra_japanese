@@ -153,7 +153,7 @@ def mask(config: configure_pretraining.PretrainingConfig,
 
     # Find indices where masking out a token is allowed
     vocab = tokenization.FullTokenizer(
-        config.model_sentencepiece_path, config.vocab_file, do_lower_case=config.do_lower_case).vocab
+        config.vocab_file, config.model_sentencepiece_path, do_lower_case=config.do_lower_case).vocab
     candidates_mask = _get_candidates_mask(inputs, vocab, disallow_from_mask)
 
     # Set the number of tokens to mask out per example
